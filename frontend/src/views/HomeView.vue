@@ -20,9 +20,8 @@
             </p>
 
             <p class="text-warning fw-bold mb-0 mt-2 fs-5">
-              {{ recordsStore.profile.position }} /
-              {{ recordsStore.profile.throwingHand }}투{{
-                recordsStore.profile.battingSide
+              {{ recordsStore.profile.position }} / {{ throwingSideLabel }}투{{
+                battingSideLabel
               }}타
             </p>
 
@@ -142,6 +141,25 @@ const recentGames = computed(() => {
   return [...recordsStore.games]
     .sort((a, b) => new Date(b.date) - new Date(a.date)) // 날짜 기준 내림차순 정렬
     .slice(0, 3); // 최근 3개만 자르기
+});
+
+// ----------------------------------------------------
+// ⚾ 투/타 방향 약자를 한글로 변환하는 computed 속성 추가
+// ----------------------------------------------------
+
+const sideMap = {
+  R: "우",
+  L: "좌",
+  S: "양",
+  "": "정보없음",
+};
+
+const throwingSideLabel = computed(() => {
+  return sideMap[recordsStore.profile.throwingHand] || "정보없음";
+});
+
+const battingSideLabel = computed(() => {
+  return sideMap[recordsStore.profile.battingSide] || "정보없음";
 });
 </script>
 
