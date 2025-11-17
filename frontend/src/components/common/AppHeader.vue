@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
       <div class="container">
         <RouterLink class="navbar-brand fw-bold" to="/"
-          >⚾ 기록지 APP</RouterLink
+          >⚾ Kyulee Baseball Life Record</RouterLink
         >
         <button
           class="navbar-toggler"
