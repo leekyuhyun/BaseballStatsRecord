@@ -1,5 +1,5 @@
 <template>
-  <h2 class="mb-4">🗓️ 전체 경기 기록 목록</h2>
+  <h2 class="mb-4">🗓️ 전체 경기 목록 요약</h2>
   <GameList
     :games="allRecords"
     :is-summary-view="false"
@@ -9,14 +9,10 @@
 </template>
 
 <script setup>
-// Composables Imports
 import { useRecords } from "../composables/useRecords";
 import { useModal } from "../composables/useModal";
-
-// Components Imports
 import GameList from "../components/GameList.vue";
 
-// Records Hook
 const { allRecords, handleDeleteGame } = useRecords();
 const { openEditModal } = useModal();
 </script>
