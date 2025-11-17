@@ -80,34 +80,34 @@
               <table class="table table-sm table-striped table-hover mb-0 fs-7">
                 <thead class="table-primary">
                   <tr>
-                    <th>AVG</th>
-                    <th>OBP</th>
-                    <th>SLG</th>
-                    <th>OPS</th>
-                    <th>ISO</th>
-                    <th>PA</th>
-                    <th>AB</th>
-                    <th>H</th>
-                    <th>HR</th>
-                    <th>RBI</th>
-                    <th>BB</th>
-                    <th>SO</th>
+                    <th class="text-center">AVG</th>
+                    <th class="text-center">OBP</th>
+                    <th class="text-center">SLG</th>
+                    <th class="text-center">OPS</th>
+                    <th class="text-center">ISO</th>
+                    <th class="text-center">PA</th>
+                    <th class="text-center">AB</th>
+                    <th class="text-center">H</th>
+                    <th class="text-center">HR</th>
+                    <th class="text-center">RBI</th>
+                    <th class="text-center">BB</th>
+                    <th class="text-center">SO</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ recordsStore.avg }}</td>
-                    <td>{{ recordsStore.obp }}</td>
-                    <td>{{ recordsStore.slg }}</td>
-                    <td>{{ recordsStore.ops }}</td>
-                    <td>{{ recordsStore.iso }}</td>
-                    <td>{{ total.PA }}</td>
-                    <td>{{ total.AB }}</td>
-                    <td>{{ total.H }}</td>
-                    <td>{{ total.HR }}</td>
-                    <td>{{ total.RBI }}</td>
-                    <td>{{ total.BB }}</td>
-                    <td>{{ total.SO }}</td>
+                    <td class="text-center">{{ recordsStore.avg }}</td>
+                    <td class="text-center">{{ recordsStore.obp }}</td>
+                    <td class="text-center">{{ recordsStore.slg }}</td>
+                    <td class="text-center">{{ recordsStore.ops }}</td>
+                    <td class="text-center">{{ recordsStore.iso }}</td>
+                    <td class="text-center">{{ total.PA }}</td>
+                    <td class="text-center">{{ total.AB }}</td>
+                    <td class="text-center">{{ total.H }}</td>
+                    <td class="text-center">{{ total.HR }}</td>
+                    <td class="text-center">{{ total.RBI }}</td>
+                    <td class="text-center">{{ total.BB }}</td>
+                    <td class="text-center">{{ total.SO }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -118,28 +118,28 @@
               <table class="table table-sm table-striped table-hover mb-0 fs-7">
                 <thead class="table-secondary">
                   <tr>
-                    <th>1B</th>
-                    <th>2B</th>
-                    <th>3B</th>
-                    <th>HBP</th>
-                    <th>SF</th>
-                    <th>SH</th>
-                    <th>GO (땅볼)</th>
-                    <th>FO (뜬공)</th>
-                    <th>RO (기타)</th>
+                    <th class="text-center">1B</th>
+                    <th class="text-center">2B</th>
+                    <th class="text-center">3B</th>
+                    <th class="text-center">HBP</th>
+                    <th class="text-center">SF</th>
+                    <th class="text-center">SH</th>
+                    <th class="text-center">GO (땅볼)</th>
+                    <th class="text-center">FO (뜬공)</th>
+                    <th class="text-center">RO (기타)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ total["1B"] }}</td>
-                    <td>{{ total["2B"] }}</td>
-                    <td>{{ total["3B"] }}</td>
-                    <td>{{ total.HBP }}</td>
-                    <td>{{ total.SF }}</td>
-                    <td>{{ total.SH }}</td>
-                    <td>{{ total.GO }}</td>
-                    <td>{{ total.FO }}</td>
-                    <td>{{ total.RO }}</td>
+                    <td class="text-center">{{ total["1B"] }}</td>
+                    <td class="text-center">{{ total["2B"] }}</td>
+                    <td class="text-center">{{ total["3B"] }}</td>
+                    <td class="text-center">{{ total.HBP }}</td>
+                    <td class="text-center">{{ total.SF }}</td>
+                    <td class="text-center">{{ total.SH }}</td>
+                    <td class="text-center">{{ total.GO }}</td>
+                    <td class="text-center">{{ total.FO }}</td>
+                    <td class="text-center">{{ total.RO }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -167,40 +167,40 @@
               <table class="table table-sm table-striped table-hover mb-0 fs-7">
                 <thead class="table-info">
                   <tr>
-                    <th>ERA</th>
-                    <th>WHIP</th>
-                    <th>K/9</th>
-                    <th>BB/9</th>
-                    <th>K/BB</th>
-                    <th>IP</th>
-                    <th>ER</th>
-                    <th>K</th>
-                    <th>P_H</th>
-                    <th>P_BB</th>
-                    <th>W</th>
-                    <th>L</th>
-                    <th>D</th>
+                    <th class="text-center">ERA</th>
+                    <th class="text-center">WHIP</th>
+                    <th class="text-center">K/9</th>
+                    <th class="text-center">BB/9</th>
+                    <th class="text-center">K/BB</th>
+                    <th class="text-center">IP</th>
+                    <th class="text-center">ER</th>
+                    <th class="text-center">K</th>
+                    <th class="text-center">P_H</th>
+                    <th class="text-center">P_BB</th>
+                    <th class="text-center">W</th>
+                    <th class="text-center">L</th>
+                    <th class="text-center">D</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ recordsStore.era }}</td>
-                    <td>{{ recordsStore.whip }}</td>
-                    <td>{{ recordsStore.kPer9 }}</td>
-                    <td>{{ recordsStore.bbPer9 }}</td>
-                    <td>{{ recordsStore.kToBB }}</td>
-                    <td>{{ total.IP }}</td>
-                    <td>{{ total.ER }}</td>
-                    <td>{{ total.K }}</td>
-                    <td>{{ total.P_H }}</td>
-                    <td>{{ total.P_BB }}</td>
-                    <td>
+                    <td class="text-center">{{ recordsStore.era }}</td>
+                    <td class="text-center">{{ recordsStore.whip }}</td>
+                    <td class="text-center">{{ recordsStore.kPer9 }}</td>
+                    <td class="text-center">{{ recordsStore.bbPer9 }}</td>
+                    <td class="text-center">{{ recordsStore.kToBB }}</td>
+                    <td class="text-center">{{ total.IP }}</td>
+                    <td class="text-center">{{ total.ER }}</td>
+                    <td class="text-center">{{ total.K }}</td>
+                    <td class="text-center">{{ total.P_H }}</td>
+                    <td class="text-center">{{ total.P_BB }}</td>
+                    <td class="text-center">
                       <span class="badge bg-success">{{ total.W }}</span>
                     </td>
-                    <td>
+                    <td class="text-center">
                       <span class="badge bg-danger">{{ total.L }}</span>
                     </td>
-                    <td>
+                    <td class="text-center">
                       <span class="badge bg-secondary">{{ total.D }}</span>
                     </td>
                   </tr>
@@ -213,12 +213,12 @@
               <table class="table table-sm table-striped table-hover mb-0 fs-7">
                 <thead class="table-secondary">
                   <tr>
-                    <th>투구수</th>
+                    <th class="text-center">투구수</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ total.Pitches }}</td>
+                    <td class="text-center">{{ total.Pitches }}</td>
                   </tr>
                 </tbody>
               </table>

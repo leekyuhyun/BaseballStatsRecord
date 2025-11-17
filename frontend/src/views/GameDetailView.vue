@@ -52,34 +52,34 @@
             <table class="table table-sm table-striped table-hover mb-0 fs-7">
               <thead class="table-success">
                 <tr>
-                  <th>타석(PA)</th>
-                  <th>타수(AB)</th>
-                  <th>안타(H)</th>
-                  <th>홈런(HR)</th>
-                  <th>타점(RBI)</th>
-                  <th>볼넷(BB)</th>
-                  <th>삼진(SO)</th>
-                  <th>2루타(2B)</th>
-                  <th>3루타(3B)</th>
-                  <th>희생플라이(SF)</th>
-                  <th>땅볼(GO)</th>
-                  <th>뜬공(FO)</th>
+                  <th class="text-center">타석(PA)</th>
+                  <th class="text-center">타수(AB)</th>
+                  <th class="text-center">안타(H)</th>
+                  <th class="text-center">홈런(HR)</th>
+                  <th class="text-center">타점(RBI)</th>
+                  <th class="text-center">볼넷(BB)</th>
+                  <th class="text-center">삼진(SO)</th>
+                  <th class="text-center">2루타(2B)</th>
+                  <th class="text-center">3루타(3B)</th>
+                  <th class="text-center">희생플라이(SF)</th>
+                  <th class="text-center">땅볼(GO)</th>
+                  <th class="text-center">뜬공(FO)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>{{ game.hitterStats.PA || 0 }}</td>
-                  <td>{{ game.hitterStats.AB || 0 }}</td>
-                  <td>{{ game.hitterStats.H || 0 }}</td>
-                  <td>{{ game.hitterStats.HR || 0 }}</td>
-                  <td>{{ game.hitterStats.RBI || 0 }}</td>
-                  <td>{{ game.hitterStats.BB || 0 }}</td>
-                  <td>{{ game.hitterStats.SO || 0 }}</td>
-                  <td>{{ game.hitterStats["2B"] || 0 }}</td>
-                  <td>{{ game.hitterStats["3B"] || 0 }}</td>
-                  <td>{{ game.hitterStats.SF || 0 }}</td>
-                  <td>{{ game.hitterStats.GO || 0 }}</td>
-                  <td>{{ game.hitterStats.FO || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.PA || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.AB || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.H || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.HR || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.RBI || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.BB || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.SO || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats["2B"] || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats["3B"] || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.SF || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.GO || 0 }}</td>
+                  <td class="text-center">{{ game.hitterStats.FO || 0 }}</td>
                 </tr>
               </tbody>
             </table>
@@ -97,22 +97,24 @@
             <table class="table table-sm table-striped table-hover mb-0 fs-7">
               <thead class="table-info">
                 <tr>
-                  <th>이닝(IP)</th>
-                  <th>자책점(ER)</th>
-                  <th>삼진(K)</th>
-                  <th>피안타(P_H)</th>
-                  <th>볼넷(P_BB)</th>
-                  <th>투구수</th>
+                  <th class="text-center">이닝(IP)</th>
+                  <th class="text-center">자책점(ER)</th>
+                  <th class="text-center">삼진(K)</th>
+                  <th class="text-center">피안타(P_H)</th>
+                  <th class="text-center">볼넷(P_BB)</th>
+                  <th class="text-center">투구수</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>{{ game.pitcherStats.IP || 0 }}</td>
-                  <td>{{ game.pitcherStats.ER || 0 }}</td>
-                  <td>{{ game.pitcherStats.K || 0 }}</td>
-                  <td>{{ game.pitcherStats.P_H || 0 }}</td>
-                  <td>{{ game.pitcherStats.P_BB || 0 }}</td>
-                  <td>{{ game.pitcherStats.Pitches || 0 }}</td>
+                  <td class="text-center">{{ game.pitcherStats.IP || 0 }}</td>
+                  <td class="text-center">{{ game.pitcherStats.ER || 0 }}</td>
+                  <td class="text-center">{{ game.pitcherStats.K || 0 }}</td>
+                  <td class="text-center">{{ game.pitcherStats.P_H || 0 }}</td>
+                  <td class="text-center">{{ game.pitcherStats.P_BB || 0 }}</td>
+                  <td class="text-center">
+                    {{ game.pitcherStats.Pitches || 0 }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -140,15 +142,11 @@ import { useRecordsStore } from "../stores/records";
 const route = useRoute();
 const recordsStore = useRecordsStore();
 
-// URL 파라미터에서 game ID를 가져옵니다.
 const gameId = parseInt(route.params.id);
 
-// 해당 ID의 경기 데이터를 computed 속성으로 가져옵니다.
 const game = computed(() => {
-  // Pinia 스토어의 games 배열에서 ID가 일치하는 경기를 찾습니다.
   const foundGame = recordsStore.games.find((g) => g.id === gameId);
   if (!foundGame) {
-    // 경기를 찾지 못했을 경우, 오류 처리를 위한 최소 객체를 반환합니다.
     return {
       opponent: "경기를 찾을 수 없음",
       date: "",
