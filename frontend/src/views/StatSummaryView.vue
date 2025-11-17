@@ -14,7 +14,7 @@
       <div class="col-md-4">
         <div class="card shadow border-info h-100 text-center">
           <div class="card-body">
-            <p class="card-text text-muted mb-1">OPS (장타율+출루율)</p>
+            <p class="card-text text-muted mb-1">OPS</p>
             <h2 class="card-title fw-bold text-dark">{{ recordsStore.ops }}</h2>
           </div>
         </div>
@@ -68,7 +68,7 @@
         aria-labelledby="hitter-stat-tab"
       >
         <div class="card shadow">
-          <div class="card-header bg-light fw-bold">타격 지표 합계</div>
+          <div class="card-header bg-light fw-bold">타격 종합 지표</div>
           <div class="card-body p-0">
             <div
               v-if="recordsStore.totalStats.AB === 0"
@@ -77,29 +77,69 @@
               아직 타격 기록이 없습니다.
             </div>
             <div v-else class="table-responsive">
-              <table class="table table-striped table-hover mb-0">
+              <table class="table table-sm table-striped table-hover mb-0 fs-7">
                 <thead class="table-primary">
                   <tr>
-                    <th>타수(AB)</th>
-                    <th>안타(H)</th>
-                    <th>홈런(HR)</th>
-                    <th>타점(RBI)</th>
-                    <th>볼넷(BB)</th>
-                    <th>삼진(SO)</th>
-                    <th>사구(HBP)</th>
-                    <th>희생플라이(SF)</th>
+                    <th>AVG</th>
+                    <th>OBP</th>
+                    <th>SLG</th>
+                    <th>OPS</th>
+                    <th>ISO</th>
+                    <th>PA</th>
+                    <th>AB</th>
+                    <th>H</th>
+                    <th>HR</th>
+                    <th>RBI</th>
+                    <th>BB</th>
+                    <th>SO</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                    <td>{{ recordsStore.avg }}</td>
+                    <td>{{ recordsStore.obp }}</td>
+                    <td>{{ recordsStore.slg }}</td>
+                    <td>{{ recordsStore.ops }}</td>
+                    <td>{{ recordsStore.iso }}</td>
+                    <td>{{ total.PA }}</td>
                     <td>{{ total.AB }}</td>
                     <td>{{ total.H }}</td>
                     <td>{{ total.HR }}</td>
                     <td>{{ total.RBI }}</td>
                     <td>{{ total.BB }}</td>
                     <td>{{ total.SO }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="card-header bg-light fw-bold border-top">
+                세부 기록
+              </div>
+              <table class="table table-sm table-striped table-hover mb-0 fs-7">
+                <thead class="table-secondary">
+                  <tr>
+                    <th>1B</th>
+                    <th>2B</th>
+                    <th>3B</th>
+                    <th>HBP</th>
+                    <th>SF</th>
+                    <th>SH</th>
+                    <th>GO (땅볼)</th>
+                    <th>FO (뜬공)</th>
+                    <th>RO (기타)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ total["1B"] }}</td>
+                    <td>{{ total["2B"] }}</td>
+                    <td>{{ total["3B"] }}</td>
                     <td>{{ total.HBP }}</td>
                     <td>{{ total.SF }}</td>
+                    <td>{{ total.SH }}</td>
+                    <td>{{ total.GO }}</td>
+                    <td>{{ total.FO }}</td>
+                    <td>{{ total.RO }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -115,7 +155,7 @@
         aria-labelledby="pitcher-stat-tab"
       >
         <div class="card shadow">
-          <div class="card-header bg-light fw-bold">투구 지표 합계</div>
+          <div class="card-header bg-light fw-bold">투구 종합 지표</div>
           <div class="card-body p-0">
             <div
               v-if="recordsStore.totalStats.IP === 0"
@@ -124,26 +164,36 @@
               아직 투구 기록이 없습니다.
             </div>
             <div v-else class="table-responsive">
-              <table class="table table-striped table-hover mb-0">
+              <table class="table table-sm table-striped table-hover mb-0 fs-7">
                 <thead class="table-info">
                   <tr>
-                    <th>투구이닝(IP)</th>
-                    <th>자책점(ER)</th>
-                    <th>탈삼진(K)</th>
-                    <th>볼넷허용(BB)</th>
-                    <th>피안타(P_H)</th>
-                    <th>승(W)</th>
-                    <th>패(L)</th>
-                    <th>무(D)</th>
+                    <th>ERA</th>
+                    <th>WHIP</th>
+                    <th>K/9</th>
+                    <th>BB/9</th>
+                    <th>K/BB</th>
+                    <th>IP</th>
+                    <th>ER</th>
+                    <th>K</th>
+                    <th>P_H</th>
+                    <th>P_BB</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>D</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                    <td>{{ recordsStore.era }}</td>
+                    <td>{{ recordsStore.whip }}</td>
+                    <td>{{ recordsStore.kPer9 }}</td>
+                    <td>{{ recordsStore.bbPer9 }}</td>
+                    <td>{{ recordsStore.kToBB }}</td>
                     <td>{{ total.IP }}</td>
                     <td>{{ total.ER }}</td>
                     <td>{{ total.K }}</td>
-                    <td>{{ total.P_BB }}</td>
                     <td>{{ total.P_H }}</td>
+                    <td>{{ total.P_BB }}</td>
                     <td>
                       <span class="badge bg-success">{{ total.W }}</span>
                     </td>
@@ -153,6 +203,22 @@
                     <td>
                       <span class="badge bg-secondary">{{ total.D }}</span>
                     </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="card-header bg-light fw-bold border-top">
+                세부 기록
+              </div>
+              <table class="table table-sm table-striped table-hover mb-0 fs-7">
+                <thead class="table-secondary">
+                  <tr>
+                    <th>투구수</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ total.Pitches }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -170,12 +236,18 @@ import { useRecordsStore } from "../stores/records";
 
 const recordsStore = useRecordsStore();
 
-// Pinia의 totalStats 게터를 사용하여 전체 합계 데이터를 가져옵니다.
 const total = computed(() => recordsStore.totalStats);
 </script>
 
 <style scoped>
-/* 카드 테두리 색상 강조 */
+/* 부트스트랩 table-sm 클래스를 사용했지만, fs-7 (font-size 7) 클래스를 커스텀으로 추가하여 더 작게 만듭니다. */
+.fs-7 {
+  font-size: 0.75rem !important; /* 기본 폰트 사이즈보다 작게 조정 */
+}
+.table-responsive {
+  /* 가로 스크롤을 허용하고, 세로 스크롤은 필요할 때만 나타나도록 설정 */
+  overflow-x: auto;
+}
 .border-info {
   border-color: #0dcaf0 !important;
 }

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
+// 유틸리티 함수 임포트
 import {
   calculateAVG,
   calculateERA,
@@ -7,9 +8,6 @@ import {
   calculateWHIP,
 } from "../utils/statCalculator";
 
-// ==========================================================
-// defineStore의 두 번째 인자: Setup function (상태, 액션, 게터 정의)
-// ==========================================================
 export const useRecordsStore = defineStore(
   "records",
   () => {
@@ -20,9 +18,9 @@ export const useRecordsStore = defineStore(
       name: "사용자",
       number: "1",
       team: "우리팀",
-      position: "P", // 기본값: 투수 (Pitcher)
-      throwingHand: "R", // 기본값: 우투 (Right)
-      battingSide: "R", // 기본값: 우타 (Right)
+      position: "P", // 포지션 추가
+      throwingHand: "R", // 던지는 손 추가
+      battingSide: "R", // 치는 방향 추가
     }); // 전체 경기 기록을 담는 배열
 
     const games = ref([]);
@@ -52,7 +50,7 @@ export const useRecordsStore = defineStore(
 
     const totalStats = computed(() => {
       let total = {
-        // 타자 기록 총합 (Hitting)
+        // 타자 기록 총합 (Hitting) - 모든 세부 항목 포함
         H: 0,
         AB: 0,
         PA: 0,
@@ -81,7 +79,7 @@ export const useRecordsStore = defineStore(
       };
 
       games.value.forEach((game) => {
-        // 경기 결과 합산...
+        // 경기 결과 합산
         if (game.result === "W") total.W++;
         if (game.result === "L") total.L++;
         if (game.result === "D") total.D++; // 타자 기록 합산
@@ -116,18 +114,19 @@ export const useRecordsStore = defineStore(
       });
 
       return total;
-    }); // 타자 비율 성적
+    }); /** 2. 타율 (AVG) 계산: H / AB */ // ---------------------------------------------------- // 타자 비율 성적 (Hitting Ratio Stats) // ----------------------------------------------------
 
     const avg = computed(() =>
       calculateAVG(totalStats.value.H, totalStats.value.AB)
-    );
+    ); /** 3. 출루율 (OBP) 계산 */
+
     const obp = computed(() => {
       const stats = totalStats.value;
       const numerator = stats.H + stats.BB + stats.HBP;
       const denominator = stats.AB + stats.BB + stats.HBP + stats.SF;
       if (denominator === 0) return ".000";
       return (numerator / denominator).toFixed(3).substring(1);
-    });
+    }); /** 4. 장타율 (SLG) 계산 */
 
     const slg = computed(() => {
       const stats = totalStats.value;
@@ -136,30 +135,54 @@ export const useRecordsStore = defineStore(
       const AB = stats.AB;
       if (AB === 0) return ".000";
       return (totalBases / AB).toFixed(3).substring(1);
-    });
+    }); /** 5. OPS (OBP + SLG) 계산 */
 
     const ops = computed(() => {
       const obpVal = parseFloat(obp.value);
       const slgVal = parseFloat(slg.value);
       return calculateOPS(obpVal, slgVal);
-    }); // 투수 비율 성적
+    });
+
+    /** 6. 순수 장타율 (ISO) 계산: SLG - AVG */
+    const iso = computed(() => {
+      const slgVal = parseFloat(slg.value);
+      const avgVal = parseFloat(avg.value);
+      return (slgVal - avgVal).toFixed(3).substring(1);
+    }); /** 7. 방어율 (ERA) 계산 */ // ---------------------------------------------------- // 투수 비율 성적 (Pitching Ratio Stats) // ----------------------------------------------------
 
     const era = computed(() =>
       calculateERA(totalStats.value.ER, totalStats.value.IP)
-    );
+    ); /** 8. WHIP (이닝당 출루 허용률) 계산 */
+
     const whip = computed(() =>
       calculateWHIP(
         totalStats.value.P_BB,
         totalStats.value.P_H,
         totalStats.value.IP
       )
-    );
+    ); /** 9. 9이닝당 삼진 (K/9) 계산 */
 
     const kPer9 = computed(() => {
       const K = totalStats.value.K;
       const IP = totalStats.value.IP;
       if (IP === 0) return "0.00";
       return ((K * 9) / IP).toFixed(2);
+    });
+
+    /** 10. 9이닝당 볼넷 (BB/9) 계산 */
+    const bbPer9 = computed(() => {
+      const BB = totalStats.value.P_BB;
+      const IP = totalStats.value.IP;
+      if (IP === 0) return "0.00";
+      return ((BB * 9) / IP).toFixed(2);
+    });
+
+    /** 11. K/BB (삼진 대 볼넷 비율) 계산 */
+    const kToBB = computed(() => {
+      const K = totalStats.value.K;
+      const BB = totalStats.value.P_BB;
+      if (BB === 0) return K > 0 ? "∞" : "0.00";
+      return (K / BB).toFixed(2);
     });
 
     return {
@@ -173,18 +196,21 @@ export const useRecordsStore = defineStore(
       obp,
       slg,
       ops,
+      iso,
       era,
       whip,
       kPer9,
+      bbPer9,
+      kToBB,
     };
   },
   {
     // ==========================================================
-    // defineStore의 세 번째 인자: Options Object (여기에 persist 옵션을 넣어야 합니다!)
+    // Pinia Persisted State (Local Storage) 설정
     // ==========================================================
     persist: {
-      key: "baseball_records_app", // Local Storage에 저장될 키 이름
-      storage: localStorage, // Local Storage 사용 지정
+      key: "baseball_records_app",
+      storage: localStorage,
     },
   }
 );
