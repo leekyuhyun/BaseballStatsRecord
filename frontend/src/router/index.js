@@ -14,6 +14,12 @@ const router = createRouter({
       name: "gameList",
       component: () => import("../views/GameListView.vue"),
     },
+    // 👈 경기 상세 뷰 경로 추가
+    {
+      path: "/games/:id",
+      name: "gameDetail",
+      component: () => import("../views/GameDetailView.vue"),
+    },
     {
       path: "/stats",
       name: "statSummary",
@@ -30,6 +36,6 @@ const router = createRouter({
       component: () => import("../views/RecordInputView.vue"),
     },
   ],
-});
+}); //
 
 export default router;

@@ -41,12 +41,12 @@
                 </td>
                 <td class="text-center">{{ game.score }}</td>
                 <td class="text-center">
-                  <button
+                  <RouterLink
+                    :to="`/games/${game.id}`"
                     class="btn btn-sm btn-outline-secondary"
-                    @click="viewDetail(game)"
                   >
                     상세 보기
-                  </button>
+                  </RouterLink>
                 </td>
               </tr>
             </tbody>
@@ -111,16 +111,7 @@ const getResultClass = (result) => {
   }
 };
 
-const viewDetail = (game) => {
-  // 상세 경기 뷰가 없으므로 임시로 알림창 표시
-  alert(
-    `[${game.date}] ${game.opponent} 전 상세 기록:\n\n` +
-      `타자 기록: ${JSON.stringify(game.hitterStats, null, 2)}\n` +
-      `투수 기록: ${JSON.stringify(game.pitcherStats, null, 2)}`
-  );
-
-  // 실제 앱에서는 router.push(`/games/${game.id}`)를 사용하여 상세 뷰로 이동합니다.
-};
+// ❌ viewDetail 함수는 이제 RouterLink로 대체되었으므로 제거합니다.
 </script>
 
 <style scoped>

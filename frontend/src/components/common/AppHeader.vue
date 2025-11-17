@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
       <div class="container">
         <RouterLink class="navbar-brand fw-bold" to="/"
-          >⚾ Kyulee Baseball Life Record</RouterLink
+          >⚾ Kyulee Baseball</RouterLink
         >
         <button
           class="navbar-toggler"
