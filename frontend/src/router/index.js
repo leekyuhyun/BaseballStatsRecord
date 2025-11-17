@@ -1,19 +1,35 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import StatsDetailView from "../views/StatsDetailView.vue";
-import GameListView from "../views/GameListView.vue";
-import GlossaryView from "../views/GlossaryView.vue";
-
-const routes = [
-  { path: "/", name: "Home", component: HomeView },
-  { path: "/stats", name: "StatsDetail", component: StatsDetailView },
-  { path: "/games", name: "GameList", component: GameListView },
-  { path: "/glossary", name: "Glossary", component: GlossaryView },
-];
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: "/",
+      name: "home",
+      component: HomeView,
+    },
+    {
+      path: "/games",
+      name: "gameList",
+      component: () => import("../views/GameListView.vue"),
+    },
+    {
+      path: "/stats",
+      name: "statSummary",
+      component: () => import("../views/StatSummaryView.vue"),
+    },
+    {
+      path: "/terms",
+      name: "terminology",
+      component: () => import("../views/TerminologyView.vue"),
+    },
+    {
+      path: "/record-input",
+      name: "recordInput",
+      component: () => import("../views/RecordInputView.vue"),
+    },
+  ],
 });
 
 export default router;

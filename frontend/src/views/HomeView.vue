@@ -1,63 +1,152 @@
 <template>
-  <h2 class="mb-4">⚾️ 홈: 내 성적 및 최근 활동</h2>
+  <div class="home">
+    <h1 class="mb-5 text-center text-dark">👋 마이 페이지</h1>
 
-  <div class="card shadow-sm mb-4">
-    <div class="card-header bg-warning text-dark">
-      <h5 class="mb-0">👤 내 프로필</h5>
-    </div>
-    <div class="card-body">
-      <p><strong>이름:</strong> 홍길동</p>
-      <p>
-        <strong>주 포지션:</strong>
-        {{
-          batterSummary.totalPA > 0 && pitcherSummary.totalIP > 0
-            ? "투타 겸업"
-            : batterSummary.totalPA > 0
-            ? "타자"
-            : pitcherSummary.totalIP > 0
-            ? "투수"
-            : "기록 없음"
-        }}
-      </p>
-      <p><strong>총 경기 수:</strong> {{ allRecords.length }} 경기</p>
-    </div>
-  </div>
+    <div class="row mb-5 g-4">
+      <div class="col-lg-12">
+        <div
+          class="card shadow-lg border-0 bg-primary text-white position-relative"
+        >
+          <div class="card-body text-center py-4">
+            <h5 class="card-title mb-1">나의 프로필</h5>
+            <h2 class="card-text fw-bold">
+              {{ recordsStore.profile.name }}
+              <span v-if="recordsStore.profile.number">
+                (NO. {{ recordsStore.profile.number }})</span
+              >
+            </h2>
+            <p class="text-light mb-0">
+              소속 팀: {{ recordsStore.profile.team }}
+            </p>
 
-  <div class="card shadow-sm mb-5">
-    <div class="card-header bg-primary text-white">
-      <h5 class="mb-0">📊 시즌 성적 요약</h5>
-    </div>
-    <div class="card-body">
-      <h4 class="text-danger fw-bold">
-        {{ batterSummary.battingAvg }} AVG /
-        {{ pitcherSummary.era.toFixed(2) }} ERA
-      </h4>
-      <p class="text-muted small">타율 / 방어율</p>
-    </div>
-  </div>
+            <p class="text-warning fw-bold mb-0 mt-2 fs-5">
+              {{ recordsStore.profile.position }} /
+              {{ recordsStore.profile.throwingHand }}투{{
+                recordsStore.profile.battingSide
+              }}타
+            </p>
 
-  <h3 class="mt-5 mb-3">🗓️ 최근 경기 기록</h3>
-  <GameList
-    :games="allRecords.slice().reverse().slice(0, 3)"
-    :is-summary-view="true"
-    @edit-game="openEditModal"
-    @delete-game="handleDeleteGame"
-  />
+            <button
+              class="btn btn-sm btn-warning position-absolute top-0 end-0 m-3"
+              data-bs-toggle="modal"
+              data-bs-target="#profileEditModal"
+            >
+              수정
+            </button>
+          </div>
+        </div>
+      </div>
 
-  <div class="d-grid gap-2 mt-4">
-    <router-link to="/games" class="btn btn-outline-primary">
-      전체 경기 기록 목록 보기
-    </router-link>
+      <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-header bg-warning text-dark fw-bold">
+            📊 이번 시즌 핵심 성적
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                타율 (AVG)
+                <span class="badge bg-dark rounded-pill fw-bold">{{
+                  recordsStore.avg
+                }}</span>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                OPS
+                <span class="badge bg-dark rounded-pill fw-bold">{{
+                  recordsStore.ops
+                }}</span>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+              >
+                방어율 (ERA)
+                <span class="badge bg-dark rounded-pill fw-bold">{{
+                  recordsStore.era
+                }}</span>
+              </li>
+            </ul>
+            <RouterLink
+              to="/stats"
+              class="btn btn-sm btn-outline-primary mt-3 w-100"
+              >세부 성적 보러가기</RouterLink
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-header bg-light">
+            📜 최근 경기 목록 (총 {{ totalGames }} 경기)
+          </div>
+          <ul v-if="totalGames > 0" class="list-group list-group-flush">
+            <li
+              v-for="game in recentGames"
+              :key="game.id"
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <span
+                  :class="[
+                    'badge me-2',
+                    game.result === 'W' ? 'bg-primary' : 'bg-secondary',
+                  ]"
+                  >{{ game.result }}</span
+                >
+                <span class="fw-bold">{{ game.opponent }}</span> 전
+                <small class="text-muted ms-3">{{ game.date }}</small>
+              </div>
+              <span class="text-muted">{{ game.score }}</span>
+            </li>
+            <li class="list-group-item text-center">
+              <RouterLink to="/games" class="btn btn-outline-primary btn-sm"
+                >전체 경기 더보기</RouterLink
+              >
+            </li>
+          </ul>
+          <div
+            v-else
+            class="card-body text-center d-flex align-items-center justify-content-center"
+          >
+            <p class="text-muted">
+              아직 기록된 경기가 없습니다. <br />
+              <RouterLink to="/record-input" class="fw-bold"
+                >기록 입력 뷰</RouterLink
+              >에서 첫 경기를 추가해주세요!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ProfileEditModal />
   </div>
 </template>
 
 <script setup>
-import { useRecords } from "../composables/useRecords";
-import { useModal } from "../composables/useModal";
-import GameList from "../components/GameList.vue";
+import { computed } from "vue";
+import { RouterLink } from "vue-router";
+import { useRecordsStore } from "../stores/records";
+import ProfileEditModal from "../components/common/ProfileEditModal.vue";
 
-// Composables Hook
-const { allRecords, batterSummary, pitcherSummary, handleDeleteGame } =
-  useRecords();
-const { openEditModal } = useModal();
+const recordsStore = useRecordsStore();
+
+const totalGames = computed(() => recordsStore.games.length);
+
+// 최근 3경기만 보여주기 (최신순)
+const recentGames = computed(() => {
+  return [...recordsStore.games]
+    .sort((a, b) => new Date(b.date) - new Date(a.date)) // 날짜 기준 내림차순 정렬
+    .slice(0, 3); // 최근 3개만 자르기
+});
 </script>
+
+<style scoped>
+.card-title {
+  font-size: 1.25rem;
+}
+</style>
